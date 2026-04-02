@@ -1,7 +1,8 @@
 import { useState } from "react";
-import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
+import { FaTrashAlt } from "react-icons/fa";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
+import "./ListaTarefas.css";
 
 function ListaTarefas({}) {
   const [novaTarefa, setNovaTarefa] = useState("");
@@ -13,30 +14,66 @@ function ListaTarefas({}) {
       return;
     }
 
-    console.log(novaTarefa);
+    setTarefas([{ id: Date.now(), concluida: false, descricao: novaTarefa }, ...tarefas]);
+    setNovaTarefa("");
+  };
 
-    setTarefas([novaTarefa, ...tarefas]);
+  const removerTarefa = (indice) => {
+    if (confirm("Tem certeza que deseja remover esta tarefa?")) {
+      tarefas.splice(indice, 1);
+      setTarefas([...tarefas]);
+    }
+  };
+
+  const marcarComoConcluida = (indice) => {
+    tarefas[indice].concluida = !tarefas[indice].concluida;
+    setTarefas([...tarefas]);
   };
 
   return (
     <Principal>
-      <h2>Lista de Tarefas</h2>
+      <h2>Lista de Tarefas ({tarefas.length})</h2>
 
-      <CampoCustomizado
-        label="Nova Tarefa"
-        // proprieade não mapeadas...
-        id="nova-tarefa"
-        type="text"
-        placeholder="Precione Enter para adicionar"
-        value={novaTarefa}
-        onChange={(event) => setNovaTarefa(event.target.value)}
-      />
+      <div className="lista-tarefas__campo-adicionar">
+        <CampoCustomizado
+          label="Nova Tarefa"
+          // proprieade não mapeadas...
+          id="nova-tarefa"
+          type="text"
+          placeholder="Precione Enter para adicionar"
+          value={novaTarefa}
+          onChange={(event) => setNovaTarefa(event.target.value)}
+          onKeyPress={(event) => {
+            if (event.code === "Enter") {
+              adicionarTarefa();
+            }
+          }}
+        />
+        {/* 
+        <BotaoCustomizado tipo="secundario" aoClicar={adicionarTarefa}>
+          +
+        </BotaoCustomizado> */}
+      </div>
+      {!tarefas.length && (
+        <span className="lista-tarefas__mensagem-sem-tarefas">Não há tarefas para mostrar.</span>
+      )}
 
-      <BotaoCustomizado tipo="secundario" aoClicar={adicionarTarefa}>
-        +
-      </BotaoCustomizado>
-
-      {JSON.stringify(tarefas, null, 2)}
+      {tarefas.map((item, indice) => {
+        return (
+          <div key={indice} className="lista-tarefas__tarefa">
+            <input
+              type="checkbox"
+              checked={item.concluida}
+              onChange={() => marcarComoConcluida(indice)}
+            />
+            <span style={{ textDecoration: item.concluida ? "line-through" : "none" }}>
+              {item.descricao}
+            </span>
+            <FaTrashAlt onClick={() => removerTarefa(indice)} />
+          </div>
+        );
+      })}
+      {/* <pre>{JSON.stringify(tarefas, null, 2)}</pre> */}
     </Principal>
   );
 }
