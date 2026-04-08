@@ -5,9 +5,10 @@ import "./App.css";
 // imports de componentes/paginas internas do projeto React (arquivos .jsx)
 import Cabecalho from "./componentes/Cabecalho/Cabecalho";
 import Rodape from "./componentes/Rodape/Rodape";
-import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
+import CadastroCliente from "./paginas/CadastroCliente/CadastroCliente";
 import ListaProdutos from "./paginas/ListaProdutos/ListaProdutos";
 import ListaTarefas from "./paginas/ListaTarefas/ListaTarefas";
+import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
 
 const roteador = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const roteador = createBrowserRouter([
   {
     path: "lista-tarefas",
     element: <ListaTarefas />,
+  },
+  {
+    path: "cadastro-cliente",
+    element: <CadastroCliente />,
   },
   {
     path: "*",

@@ -32,7 +32,6 @@ function ListaTarefas() {
 
   return (
     <Principal voltarPara="/" titulo={`Lista de Tarefas (${tarefas.length})`}>
-      <div className="lista-tarefas__campo-adicionar">
         <CampoCustomizado
           label="Nova Tarefa"
           // proprieade não mapeadas...
@@ -51,7 +50,6 @@ function ListaTarefas() {
         <BotaoCustomizado tipo="secundario" aoClicar={adicionarTarefa}>
           +
         </BotaoCustomizado> */}
-      </div>
       {!tarefas.length && (
         <span className="lista-tarefas__mensagem-sem-tarefas">Não há tarefas para mostrar.</span>
       )}
