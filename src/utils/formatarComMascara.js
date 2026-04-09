@@ -1,4 +1,4 @@
-export const formatarComMascara = (value, mask) => {
+ const formatarComMascara = (value, mask) => {
   if (!value) return "";
   let numericValue = value.replace(/[\D]/g, "");
   let maskedValue = "";
@@ -15,4 +15,7 @@ export const formatarComMascara = (value, mask) => {
   return maskedValue;
 };
 
+export default formatarComMascara;
+
 export const MASCARA_CPF = "###.###.###-##";
+export const MASCARA_CELULAR = "(##) #####-####";
