@@ -1,12 +1,16 @@
-import Principal from "../../componentes/Principal/Principal";
-import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
-import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import { useState } from "react";
-import formatarComMascara, { MASCARA_CPF, MASCARA_CELULAR } from "../../utils/formatarComMascara";
+import { toast } from "react-toastify";
+import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
+import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
+import Principal from "../../componentes/Principal/Principal";
+import formatarComMascara, { MASCARA_CELULAR, MASCARA_CPF } from "../../utils/formatarComMascara";
 import validarCPF from "../../utils/validarCPF";
 import validarEmail from "../../utils/validarEmail";
+import { useNavigate } from "react-router-dom";
 
 function CadastroCliente() {
+  const navigate = useNavigate();
+
   const [cliente, setCliente] = useState({
     nome: "",
     cpf: "",
@@ -17,11 +21,35 @@ function CadastroCliente() {
   });
 
   const salvar = () => {
-    console.log("Cliente salvo:", cliente);
+    if (!cliente.nome?.trim() || !cliente.cpf?.trim()) {
+      toast.error("Nome e CPF são obrigatórios!");
+      return;
+    }
+
+    if (!validarCPF(cliente.cpf)) {
+      toast.error("CPF inválido!");
+      return;
+    }
+
+    if (cliente.email?.trim() && !validarEmail(cliente.email)) {
+      toast.error("Email inválido!");
+      return;
+    }
+
+    const clientesDoLocalStorage = JSON.parse(localStorage.getItem("clientes")) || [];
+
+    const novoCliente = { id: crypto.randomUUID(), ...cliente };
+    clientesDoLocalStorage.push(novoCliente);
+    localStorage.setItem("clientes", JSON.stringify(clientesDoLocalStorage));
+
+    toast.success("Cliente salvo com sucesso!");
+    navigate("/lista-clientes");
   };
 
+  const titulo = cliente.id ? "Editar Cliente" : "Novo Cliente";
+
   return (
-    <Principal titulo="Novo Cliente">
+    <Principal titulo={titulo} voltarPara="/lista-clientes">
       <CampoCustomizado
         label="Nome"
         value={cliente.nome}
@@ -35,7 +63,7 @@ function CadastroCliente() {
         }
         onBlur={(e) => {
           if (e.target.value.trim() && !validarCPF(e.target.value)) {
-            alert("CPF inválido!");
+            toast.error("CPF inválido!");
           }
         }}
       />
@@ -60,7 +88,7 @@ function CadastroCliente() {
         onChange={(e) => setCliente({ ...cliente, email: e.target.value })}
         onBlur={(e) => {
           if (e.target.value.trim() && !validarEmail(e.target.value)) {
-            alert("Email inválido!");
+            toast.error("Email inválido!");
           }
         }}
       />
@@ -89,7 +117,7 @@ function CadastroCliente() {
             style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "8px" }}
           />
         </div>
-      )}  
+      )}
       <BotaoCustomizado tipo="primario" aoClicar={salvar}>
         Salvar
       </BotaoCustomizado>

@@ -17,6 +17,14 @@ function PaginaInicial() {
         Lista de Tarefas
       </BotaoCustomizado>
 
+      <BotaoCustomizado tipo="primario" aoClicar={() => navigate("/lista-clientes")}>
+        Lista de Clientes
+      </BotaoCustomizado>
+
+      <BotaoCustomizado tipo="secundario" aoClicar={() => navigate("/cadastro-cliente")}>
+        Cadastro de Clientes
+      </BotaoCustomizado>
+
       <BotaoCustomizado aoClicar={() => navigate("/blablabla")}>Rota Inválida</BotaoCustomizado>
     </Principal>
   );
