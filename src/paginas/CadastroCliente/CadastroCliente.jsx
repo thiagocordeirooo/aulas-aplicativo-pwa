@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
@@ -6,10 +6,24 @@ import Principal from "../../componentes/Principal/Principal";
 import formatarComMascara, { MASCARA_CELULAR, MASCARA_CPF } from "../../utils/formatarComMascara";
 import validarCPF from "../../utils/validarCPF";
 import validarEmail from "../../utils/validarEmail";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function CadastroCliente() {
   const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.clienteId) {
+      const clientesDoLocalStorage = JSON.parse(localStorage.getItem("clientes")) || [];
+      const clienteEncontrado = clientesDoLocalStorage.find(
+        (itemCliente) => itemCliente.id === params.clienteId
+      );
+
+      if (clienteEncontrado) {
+        setCliente(clienteEncontrado);
+      }
+    }
+  }, [params]);
 
   const [cliente, setCliente] = useState({
     nome: "",
@@ -38,8 +52,17 @@ function CadastroCliente() {
 
     const clientesDoLocalStorage = JSON.parse(localStorage.getItem("clientes")) || [];
 
-    const novoCliente = { id: crypto.randomUUID(), ...cliente };
-    clientesDoLocalStorage.push(novoCliente);
+    if (cliente.id) {
+      const indexDoCliente = clientesDoLocalStorage.findIndex(
+        (itemCliente) => itemCliente.id === cliente.id
+      );
+
+      clientesDoLocalStorage[indexDoCliente] = cliente;
+    } else {
+      const novoCliente = { id: crypto.randomUUID(), ...cliente };
+      clientesDoLocalStorage.push(novoCliente);
+    }
+
     localStorage.setItem("clientes", JSON.stringify(clientesDoLocalStorage));
 
     toast.success("Cliente salvo com sucesso!");

@@ -32,11 +32,11 @@ const roteador = createBrowserRouter([
     element: <ListaClientes />,
   },
   {
-    path: "cadastro-cliente",
+    path: "cadastro-cliente/:clienteId?", // o "?" torna o parâmetro opcional, ou seja, pode ser acessado tanto para criar um novo cliente (sem id) quanto para editar um cliente existente (com id)
     element: <CadastroCliente />,
   },
   {
-    path: "*",
+    path: "*", //
     element: <h3>Página não encontrada!!</h3>,
   },
 ]);
