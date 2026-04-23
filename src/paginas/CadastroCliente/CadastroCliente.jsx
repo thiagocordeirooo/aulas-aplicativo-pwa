@@ -12,6 +12,16 @@ function CadastroCliente() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const [cliente, setCliente] = useState({
+    nome: "",
+    cpf: "",
+    dataNascimento: "",
+    celular: "",
+    email: "",
+    cidade: "",
+    foto: null,
+  });
+
   useEffect(() => {
     if (params.clienteId) {
       const clientesDoLocalStorage = JSON.parse(localStorage.getItem("clientes")) || [];
@@ -24,15 +34,6 @@ function CadastroCliente() {
       }
     }
   }, [params]);
-
-  const [cliente, setCliente] = useState({
-    nome: "",
-    cpf: "",
-    dataNascimento: "",
-    celular: "",
-    email: "",
-    foto: null,
-  });
 
   const salvar = () => {
     if (!cliente.nome?.trim() || !cliente.cpf?.trim()) {
@@ -77,6 +78,7 @@ function CadastroCliente() {
         label="Nome"
         value={cliente.nome}
         onChange={(e) => setCliente({ ...cliente, nome: e.target.value })}
+        obrigatorio
       />
       <CampoCustomizado
         label="CPF"
@@ -89,7 +91,21 @@ function CadastroCliente() {
             toast.error("CPF inválido!");
           }
         }}
+        obrigatorio
       />
+
+      <CampoCustomizado
+        label="Cidade"
+        opcoes={[
+          { valor: "1", label: "Florianópolis" },
+          { valor: "2", label: "São José" },
+          { valor: "3", label: "Palhoça" },
+          { valor: "4", label: "Biguaçu" },
+        ]}
+        value={cliente.cidade}
+        onChange={(e) => setCliente({ ...cliente, cidade: e.target.value })}
+      />
+
       <CampoCustomizado
         type="date"
         label="Data Nascimento"

@@ -4,3 +4,22 @@
   right: 24px;
   cursor: pointer;
 }
+
+.lista-clientes__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid var(--cor-cinza);
+}
+.lista-clientes__item-informacoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lista-clientes__mensagem-vazia {
+  text-align: center;
+  margin-top: 32px;
+  color: var(--cor-texto-padrao);
+}

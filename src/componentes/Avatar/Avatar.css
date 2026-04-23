@@ -7,3 +7,8 @@
   place-content: center;
   color: var(--cor-texto-claro);
 }
+
+.avatar__root img {
+  border-radius: 50%;
+  width: 100%;
+}
