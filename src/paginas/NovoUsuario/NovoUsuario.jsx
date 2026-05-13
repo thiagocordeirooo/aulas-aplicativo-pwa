@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
+import validarEmail from "../../utils/validarEmail";
+import validarSenha from "../../utils/validarSenha";
 
 function NovoUsuario() {
   const navigate = useNavigate();
@@ -21,13 +23,25 @@ function NovoUsuario() {
       return;
     }
 
+    if (!validarEmail(usuarioForm.email)) {
+      toast.error("Email inválido.");
+      return;
+    }
+
+    if (!validarSenha(usuarioForm.senha)) {
+      toast.error(
+        "A senha deve conter no mínimo 4 caracteres."
+      );
+      return;
+    }
+
     if (usuarioForm.senha !== usuarioForm.confirmacaoSenha) {
       toast.error("As senhas não coincidem.");
       return;
     }
 
     const usuariosDoLocalStorage = JSON.parse(localStorage.getItem("usuarios")) || [];
-    
+
     const usuarioJaCadastrado = usuariosDoLocalStorage.find((u) => u.email === usuarioForm.email);
     if (usuarioJaCadastrado) {
       // if(usuarioJaCadastrado !== undefined && usuarioJaCadastrado !== null)
@@ -44,7 +58,7 @@ function NovoUsuario() {
   };
 
   return (
-    <Principal titulo="Novo Usuário">
+    <Principal titulo="Novo Usuário" voltarPara="/login">
       <CampoCustomizado
         label="Nome"
         id="nome"
@@ -57,6 +71,11 @@ function NovoUsuario() {
         type="email"
         value={usuarioForm.email}
         onChange={(e) => setUsuarioForm({ ...usuarioForm, email: e.target.value })}
+        onBlur={(e) => {
+          if (!validarEmail(e.target.value)) {
+            toast.error("Email inválido.");
+          }
+        }}
         obrigatorio
       />
       <CampoCustomizado
@@ -64,8 +83,16 @@ function NovoUsuario() {
         type="password"
         value={usuarioForm.senha}
         onChange={(e) => setUsuarioForm({ ...usuarioForm, senha: e.target.value })}
+        onBlur={(e) => {
+          if (!validarSenha(e.target.value)) {
+            toast.error(
+              "A senha deve conter no mínimo 4 caracteres."
+            );
+          }
+        }}
         obrigatorio
       />
+
       <CampoCustomizado
         label="Confirmação da Senha"
         type="password"

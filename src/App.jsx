@@ -12,33 +12,46 @@ import CadastroCliente from "./paginas/CadastroCliente/CadastroCliente";
 import ListaClientes from "./paginas/ListaClientes/ListaClientes";
 import ListaProdutos from "./paginas/ListaProdutos/ListaProdutos";
 import ListaTarefas from "./paginas/ListaTarefas/ListaTarefas";
+import Login from "./paginas/Login/Login";
 import NovoUsuario from "./paginas/NovoUsuario/NovoUsuario";
 import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
+import ValidarAutenticacao from "./componentes/ValidarAutenticacao/ValidarAutenticacao";
 
 const roteador = createBrowserRouter([
   {
-    path: "",
-    element: <PaginaInicial />,
+    path: "login",
+    element: <Login />,
   },
   {
     path: "novo-usuario",
     element: <NovoUsuario />,
   },
   {
-    path: "lista-produtos",
-    element: <ListaProdutos />,
-  },
-  {
-    path: "lista-tarefas",
-    element: <ListaTarefas />,
-  },
-  {
-    path: "lista-clientes",
-    element: <ListaClientes />,
-  },
-  {
-    path: "cadastro-cliente/:clienteId?", // o "?" torna o parâmetro opcional, ou seja, pode ser acessado tanto para criar um novo cliente (sem id) quanto para editar um cliente existente (com id)
-    element: <CadastroCliente />,
+    path: "",
+    element: <ValidarAutenticacao />,
+    children: [
+      // Rotas privadas ao app, ou seja, só podem ser acessadas por usuários autenticados
+      {
+        path: "",
+        element: <PaginaInicial />,
+      },
+      {
+        path: "lista-produtos",
+        element: <ListaProdutos />,
+      },
+      {
+        path: "lista-tarefas",
+        element: <ListaTarefas />,
+      },
+      {
+        path: "lista-clientes",
+        element: <ListaClientes />,
+      },
+      {
+        path: "cadastro-cliente/:clienteId?", // o "?" torna o parâmetro opcional, ou seja, pode ser acessado tanto para criar um novo cliente (sem id) quanto para editar um cliente existente (com id)
+        element: <CadastroCliente />,
+      },
+    ],
   },
   {
     path: "*", //

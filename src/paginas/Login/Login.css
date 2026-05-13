@@ -1,0 +1,17 @@
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  justify-content: center;
+}
+
+.login__titulo {
+  text-align: center;
+}
+
+.login__link-cadastro {
+  text-align: center;
+  text-decoration: none;
+  color: var(--cor-secundaria-escura);
+}
