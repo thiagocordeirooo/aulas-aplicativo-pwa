@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+#root {
+    display: grid;
+    grid-template-rows: 48px 1fr 48px;
+
+}
+
+:root {
+    --cor-primaria-clara: #7986cb;
+    --cor-primaria: #3f50b5;
+    --cor-primaria-escura: #303f9f;
+
+    --cor-secundaria-clara: #ffab40;
+    --cor-secundaria: #ff9100;
+    --cor-secundaria-escura: #ff6d00;
+
+    --cor-fundo-padrao: #f7f7f7;
+
+    --cor-texto-padrao: #1c2025;
+    --cor-texto-claro: #fff;
+
+    --cor-info: #0288d1;
+    --cor-sucesso: #1aa251;
+    --cor-aviso: #dea500;
+    --cor-erro: #eb0014;
+
+    --cor-cinza: #99a7bb;
+}

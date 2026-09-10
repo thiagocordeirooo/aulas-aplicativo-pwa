@@ -1,0 +1,7 @@
+.Cabecalho_root {
+    background-color: var(--cor-primaria);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 8px;
+}
