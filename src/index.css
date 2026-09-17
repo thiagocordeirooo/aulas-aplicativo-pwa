@@ -8,12 +8,12 @@ html,
 body,
 #root {
     height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 #root {
     display: grid;
     grid-template-rows: 48px 1fr 48px;
-
 }
 
 :root {

@@ -1,0 +1,10 @@
+.Avatar_root {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--cor-cinza);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-texto-claro);
+}
