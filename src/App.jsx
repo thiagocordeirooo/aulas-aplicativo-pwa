@@ -1,13 +1,22 @@
 import "./App.css";
 import Cabecalho from "./componentes/Cabecalho/Cabecalho";
-import Principal from "./componentes/Principal/Principal";
 import Rodape from "./componentes/Rodape/Rodape";
+import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const roteador = createBrowserRouter([
+  {
+    path: "",
+    element: <PaginaInicial />,
+  },
+]);
 
 function App() {
   return (
     <>
       <Cabecalho />
-      <Principal />
+      <RouterProvider router={roteador} />
       <Rodape />
     </>
   );
