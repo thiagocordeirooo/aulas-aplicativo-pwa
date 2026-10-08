@@ -1,0 +1,15 @@
+.PaginaListaProdutos_item {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px gray;
+}
+
+.PaginaListaProdutos_cores {
+  display: flex;
+}
+
+.PaginaListaProdutos_cor-item {
+  flex: 1;
+  height: 24px;
+}
