@@ -2,6 +2,7 @@ import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
 import PaginaListaProdutos from "./paginas/PaginaListaProdutos/PaginaListaProdutos";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PaginaListaTarefas from "./paginas/PaginaListaTarefas/PaginaListaTarefas";
 
 const roteador = createBrowserRouter([
   {
@@ -11,6 +12,10 @@ const roteador = createBrowserRouter([
   {
     path: "lista-produtos",
     element: <PaginaListaProdutos />,
+  },
+  {
+    path: "fuscao-preto",
+    element: <PaginaListaTarefas />,
   },
 ]);
 

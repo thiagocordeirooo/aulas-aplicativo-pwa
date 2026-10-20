@@ -14,6 +14,13 @@ function PaginaInicial() {
       >
         Lista de Produtos
       </BotaoCustomizado>
+
+      <BotaoCustomizado
+        tipo="secundario"
+        aoClicar={() => navigate("/fuscao-preto")}
+      >
+        Lista de Tarefas
+      </BotaoCustomizado>
     </Principal>
   );
 }
