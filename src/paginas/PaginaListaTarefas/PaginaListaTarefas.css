@@ -1,0 +1,14 @@
+.PaginaListaTarefas_item {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.PaginaListaTarefas_vazia {
+    text-align: center;
+    margin-top: 48px;
+}

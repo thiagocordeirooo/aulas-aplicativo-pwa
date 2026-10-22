@@ -16,6 +16,11 @@ body,
     grid-template-rows: 48px 1fr 48px;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 :root {
     --cor-primaria-clara: #7986cb;
     --cor-primaria: #3f50b5;

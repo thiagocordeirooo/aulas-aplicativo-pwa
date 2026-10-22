@@ -5,3 +5,9 @@
     flex-direction: column;
     gap: 16px;
 }
+
+.Principal_titulo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
