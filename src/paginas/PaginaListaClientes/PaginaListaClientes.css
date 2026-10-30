@@ -1,0 +1,18 @@
+.PaginaListaClientes_item {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.PaginaListaClientes_item:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+
+.PaginaListaClientes_item_email {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
