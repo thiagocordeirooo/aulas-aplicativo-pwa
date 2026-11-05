@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useEffect, useState } from "react";
 import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
@@ -10,75 +11,100 @@ import {
 import { toast } from "react-toastify";
 import validarCPF from "../../utils/validarCPF";
 import validarEmail from "../../utils/validarEmail";
-import { salvarCliente } from "../../servicos/clientes.servico";
+import { buscarClientes, salvarCliente } from "../../servicos/clientes.servico";
+import { useNavigate, useParams } from "react-router-dom";
 
 function PaginaCadastroCliente() {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [dataNascimento, setDataNascimento] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [cpf, setCpf] = useState("");
+  const navigate = useNavigate();
+  const [formCliente, setFormCliente] = useState({
+    id: "",
+    nome: "",
+    email: "",
+    dataNascimento: "",
+    telefone: "",
+    cpf: "",
+  });
+
+  const params = useParams();
+  useEffect(() => {
+    if (params.id) {
+      const clienteParaEditar = buscarClientes().find(
+        (item) => item.id === +params.id,
+      );
+      if (clienteParaEditar) {
+        setFormCliente(clienteParaEditar);
+      }
+    }
+  }, [params.id]);
 
   const salvar = () => {
-    if (!nome.trim() || !email.trim()) {
+    if (!formCliente.nome.trim() || !formCliente.email.trim()) {
       toast.error("Os campos nome e email são obrigatórios!");
       return;
     }
 
-    if (!validarEmail(email)) {
+    if (!validarEmail(formCliente.email)) {
       toast.error("Email inválido!");
       return;
     }
 
-    if (cpf.trim() && !validarCPF(cpf)) {
+    if (formCliente.cpf.trim() && !validarCPF(formCliente.cpf)) {
       toast.error("CPF inválido!");
       return;
     }
 
-    const cliente = {
-      nome,
-      email,
-      dataNascimento,
-      telefone,
-      cpf,
-    };
-    console.log(cliente);
-    salvarCliente(cliente);
+    salvarCliente(formCliente);
     toast.success("Cliente salvo com sucesso!");
+    navigate("/lista-clientes");
   };
 
+  const titulo = formCliente.id ? "Editar Cliente" : "Novo Cliente";
+
   return (
-    <Principal titulo="Novo Cliente" voltarPara="/">
+    <Principal titulo={titulo} voltarPara="/">
       <CampoCustomizado
         label="Nome"
-        value={nome}
-        onChange={(e) => setNome(e.target.value)}
+        value={formCliente.nome}
+        onChange={(e) =>
+          setFormCliente({ ...formCliente, nome: e.target.value })
+        }
         maxLength={50}
       />
       <CampoCustomizado
         label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formCliente.email}
+        onChange={(e) =>
+          setFormCliente({ ...formCliente, email: e.target.value })
+        }
+        maxLength={50}
       />
       <CampoCustomizado
         label="Data Nascimento"
         type="date"
-        value={dataNascimento}
-        onChange={(e) => setDataNascimento(e.target.value)}
+        value={formCliente.dataNascimento}
+        onChange={(e) =>
+          setFormCliente({ ...formCliente, dataNascimento: e.target.value })
+        }
       />
       <CampoCustomizado
         label="Telefone"
         type="tel"
-        value={telefone}
+        value={formCliente.telefone}
         onChange={(e) =>
-          setTelefone(formatarComMascara(e.target.value, MASCARA_TELEFONE))
+          setFormCliente({
+            ...formCliente,
+            telefone: formatarComMascara(e.target.value, MASCARA_TELEFONE),
+          })
         }
       />
       <CampoCustomizado
         label="CPF"
-        value={cpf}
+        value={formCliente.cpf}
         onChange={(e) =>
-          setCpf(formatarComMascara(e.target.value, MASCARA_CPF))
+          setFormCliente({
+            ...formCliente,
+            cpf: formatarComMascara(e.target.value, MASCARA_CPF),
+          })
         }
       />
 

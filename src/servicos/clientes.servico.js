@@ -1,8 +1,20 @@
-import { buscarNoLocalStorage, salvarNoLocalStorage } from "./localstorage.servico";
+import {
+  buscarNoLocalStorage,
+  salvarNoLocalStorage,
+} from "./localstorage.servico";
 
 export const salvarCliente = (cliente) => {
   const clientes = buscarNoLocalStorage("clientes") || [];
-  clientes.push(cliente);
+  if (!cliente.id) {
+    // inclusão de novo cliente
+    cliente.id = Date.now();
+    clientes.push(cliente);
+  } else {
+    // edição de cliente existente
+    const index = clientes.findIndex((c) => c.id === cliente.id);
+    clientes[index] = cliente;
+  }
+  
   salvarNoLocalStorage("clientes", clientes);
 };
 
