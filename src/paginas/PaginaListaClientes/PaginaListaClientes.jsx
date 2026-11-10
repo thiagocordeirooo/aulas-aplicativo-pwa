@@ -10,10 +10,12 @@ import { MdAdd } from "react-icons/md";
 import { salvarNoLocalStorage } from "../../servicos/localstorage.servico";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 
 function PaginaListaClientes() {
   const navigate = useNavigate();
   const [clientes, setClientes] = useState(buscarClientes());
+  const [termoPesquisa, setTermoPesquisa] = useState("");
 
   const excluirCliente = (clienteParaExcluir) => {
     if (confirm(`Deseja  excluir o cliente: ${clienteParaExcluir.nome}?`)) {
@@ -30,9 +32,21 @@ function PaginaListaClientes() {
     navigate("/cadastro-cliente/" + clienteParaEditar.id);
   };
 
+  const clientesFiltrados = clientes.filter((item) => {
+    return item.nome.toLowerCase().includes(termoPesquisa.toLowerCase());
+  });
+
   return (
     <Principal titulo="Lista de Clientes" voltarPara="/">
-      {clientes.map((item, index) => {
+      <CampoCustomizado
+        type="search"
+        label="Pesquisar"
+        placeholder="Digite o nome do cliente"
+        value={termoPesquisa}
+        onChange={(e) => setTermoPesquisa(e.target.value)}
+      />
+
+      {clientesFiltrados.map((item, index) => {
         return (
           <div key={index} className="PaginaListaClientes_item">
             <div>

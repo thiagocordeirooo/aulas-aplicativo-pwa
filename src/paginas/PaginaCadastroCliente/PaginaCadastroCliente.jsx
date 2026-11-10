@@ -108,6 +108,37 @@ function PaginaCadastroCliente() {
         }
       />
 
+      <CampoCustomizado
+        type="file"
+        accept="image/*"
+        label="Foto"
+        onChange={(e) => {
+          const imagem = e.target.files[0];
+          if (imagem) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              setFormCliente({ ...formCliente, foto: event.target.result });
+            };
+            reader.readAsDataURL(imagem);
+          }
+        }}
+      />
+
+      {formCliente.foto && (
+        <div>
+          <img
+            src={formCliente.foto}
+            alt="Foto do Cliente"
+            style={{
+              width: "150px",
+              height: "150px",
+              objectFit: "cover",
+              borderRadius: "8px",
+            }}
+          />
+        </div>
+      )}
+
       <BotaoCustomizado tipo="primario" aoClicar={salvar}>
         Salvar
       </BotaoCustomizado>
