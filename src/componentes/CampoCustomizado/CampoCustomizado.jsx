@@ -4,7 +4,8 @@ function CampoCustomizado(props) {
   return (
     <div className="CampoCustomizado_root">
       <span>{props.label}</span>
-      <input {...props} className="CampoCustomizado_input" />
+      {props.rows && <textarea {...props} className="CampoCustomizado_input" />}
+      {!props.rows && <input {...props} className="CampoCustomizado_input" />}
     </div>
   );
 }

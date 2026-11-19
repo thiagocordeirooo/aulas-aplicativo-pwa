@@ -69,6 +69,7 @@ function PaginaCadastroCliente() {
           setFormCliente({ ...formCliente, nome: e.target.value })
         }
         maxLength={50}
+        rows={4}
       />
       <CampoCustomizado
         label="Email"
