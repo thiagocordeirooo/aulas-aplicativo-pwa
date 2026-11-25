@@ -5,8 +5,13 @@ import PaginaListaProdutos from "./paginas/PaginaListaProdutos/PaginaListaProdut
 import PaginaListaTarefas from "./paginas/PaginaListaTarefas/PaginaListaTarefas";
 import PaginaCadastroCliente from "./paginas/PaginaCadastroCliente/PaginaCadastroCliente";
 import PaginaListaClientes from "./paginas/PaginaListaClientes/PaginaListaClientes";
+import PaginaCadastroUsuario from "./paginas/PaginaCadastroUsuario/PaginaCadastroUsuario";
 
 const roteador = createBrowserRouter([
+  {
+    path: "cadastro-usuario",
+    element: <PaginaCadastroUsuario />,
+  },
   {
     path: "",
     element: <PaginaInicial />,
